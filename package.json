@@ -1,0 +1,28 @@
+{
+    "name": "playwright-automation-framework",
+    "version": "1.0.0",
+    "description": "Enterprise-grade Playwright automation framework with TypeScript and POM",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx playwright test",
+        "test:headed": "npx playwright test --headed",
+        "test:ui": "npx playwright test --ui",
+        "report": "npx ortoni-report show"
+    },
+    "keywords": [
+        "playwright",
+        "typescript",
+        "automation",
+        "testing",
+        "pom"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@playwright/test": "^1.49.0",
+        "typescript": "^5.0.0",
+        "dotenv": "^16.0.0",
+        "ortoni-report": "^4.0.7",
+        "@types/node": "^20.0.0"
+    }
+}
