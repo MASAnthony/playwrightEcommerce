@@ -2,12 +2,14 @@ import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { LocationPage } from '../pages/auth/LocationPage';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
+import { FirstLoginCheck } from '../pages/checkBrokenLink/FirstLoginCheck';
 import { testData } from '../utils/testData';
 
 type MyFixtures = {
     loginPage: LoginPage;
     locationPage: LocationPage;
     dashboardPage: DashboardPage;
+    firstLoginCheckPage: FirstLoginCheck;
     loggedInPage: Page;
 };
 
@@ -20,6 +22,9 @@ export const test = base.extend<MyFixtures>({
     },
     dashboardPage: async ({ page }, use) => {
         await use(new DashboardPage(page));
+    },
+    firstLoginCheckPage: async ({ page }, use) => {
+        await use(new FirstLoginCheck(page));
     },
     loggedInPage: async ({ page }, use) => {
         const loginPage = new LoginPage(page);

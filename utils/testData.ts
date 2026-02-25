@@ -20,6 +20,11 @@ export const testData = {
         comingSoonHeading: "We're Coming Soon!",
         comingSoonText: "We're Coming Soon!We're Sorry",
         cartUrlPart: 'cart',
-        dashboardUrlPart: 'dashboard'
+        dashboardUrlPart: 'dashboard',
+        navToHealthPackages: 'Navigate to Health Packages',
+        reviewCart: 'Review Cart',
+        paymentOption: 'Cash/Card on Sample Pickup',
+        confirmBooking: 'Confirm Booking',
+        myBookings: 'My Bookings'
     }
 };

@@ -1,12 +1,31 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
+import * as os from 'os';
+import type { OrtoniReportConfig } from 'ortoni-report';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
 dotenv.config();
+
+const ortoniConfig: OrtoniReportConfig = {
+    folderPath: 'ortoni-report',
+    filename: 'ortoni-report.html',
+    title: 'Sterling Accuris - Automation Report',
+    projectName: 'Playwright Automation Framework',
+    testType: 'E2E / Broken Link',
+    authorName: os.userInfo().username,
+    base64Image: false,
+    stdIO: true,
+    meta: {
+        'Test Cycle': new Date().toLocaleString('en-IN', { month: 'short', year: 'numeric' }),
+        'Environment': 'Staging QC',
+        'Platform': os.type(),
+        'Base URL': process.env.BASE_URL || 'https://staging-qc.sterlingaccuris.com'
+    }
+};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -37,11 +56,7 @@ export default defineConfig({
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: [
         ['html'],
-        ['ortoni-report', {
-            reportPath: 'ortoni-report',
-            projectName: 'Playwright Automation Framework',
-            showProjectName: true
-        }]
+        ['ortoni-report', ortoniConfig]
     ],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
