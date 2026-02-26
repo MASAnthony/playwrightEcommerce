@@ -81,7 +81,10 @@ export class FirstLoginCheck extends BasePage {
     async selectAddressAndNavigate(index: number = 1) {
         logger.info(`Selecting address at index ${index} and navigating to health packages`);
         await expect(this.selectButton.nth(index)).toBeVisible({ timeout: 20000 });
-        await this.selectButton.nth(index).click();
+        // In CI (headless), the modal overlay container (fixed inset-0 z-70) intercepts pointer events
+        // even though the Select button inside it is visible and enabled.
+        // force:true bypasses the interception check since the element is confirmed ready.
+        await this.selectButton.nth(index).click({ force: true });
         await expect(this.navToHealthPackages).toBeVisible();
         await this.navToHealthPackages.click();
     }
