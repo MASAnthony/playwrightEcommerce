@@ -86,14 +86,20 @@ export abstract class BasePage {
         logger.info('Checking for broken links...');
         await this.page.waitForLoadState('domcontentloaded');
 
-        // Collect all hrefs upfront before any async requests
-        const linkLocators = await this.page.locator('a').all();
+        // Efficiently extract all hrefs in one browser call
+        const rawHrefs = await this.page.locator('a').evaluateAll(links =>
+            links.map(link => link.getAttribute('href'))
+        );
+
         const hrefs: string[] = [];
-        for (const link of linkLocators) {
-            const href = await link.getAttribute('href');
+        for (const href of rawHrefs) {
             if (!href || href.startsWith('javascript:') || href.startsWith('#') ||
                 href.startsWith('tel:') || href.startsWith('mailto:')) continue;
-            hrefs.push(new URL(href, this.page.url()).href);
+            try {
+                hrefs.push(new URL(href, this.page.url()).href);
+            } catch (e) {
+                logger.warn(`Skipping invalid URL: ${href}`);
+            }
         }
 
         const skipped = hrefs.filter(h => this.isSkippedDomain(h));
@@ -133,13 +139,19 @@ export abstract class BasePage {
         logger.info('Checking for broken images...');
         await this.page.waitForLoadState('domcontentloaded');
 
-        // Collect all srcs upfront
-        const imgLocators = await this.page.locator('img').all();
+        // Efficiently extract all srcs in one browser call
+        const rawSrcs = await this.page.locator('img').evaluateAll(imgs =>
+            imgs.map(img => (img as HTMLImageElement).src)
+        );
+
         const srcs: string[] = [];
-        for (const img of imgLocators) {
-            const src = await img.getAttribute('src');
+        for (const src of rawSrcs) {
             if (!src || src.startsWith('data:')) continue;
-            srcs.push(new URL(src, this.page.url()).href);
+            try {
+                srcs.push(new URL(src, this.page.url()).href);
+            } catch (e) {
+                logger.warn(`Skipping invalid image source: ${src}`);
+            }
         }
         logger.info(`Found ${srcs.length} images to check`);
 
