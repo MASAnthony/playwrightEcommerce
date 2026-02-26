@@ -16,8 +16,12 @@ export class LoginPage extends BasePage {
         this.mobileInput = page.getByRole('textbox', { name: 'Mobile Number *' });
         this.sendOtpButton = page.getByRole('button', { name: 'Send OTP' });
         // Targeted locator for OTP inputs to avoid selecting the search box if present
-        this.otpInputs = page.getByRole('textbox').filter({
-            hasNot: page.getByRole('textbox', { name: /search/i })
+        // this.otpInputs = page.getByRole('textbox').filter({
+        //     hasNot: page.getByRole('textbox', { name: /search/i })
+        // });
+        // More specific locator for OTP inputs to avoid conflicts in CI
+        this.otpInputs = page.locator('input[type="text"]').filter({
+            hasNot: page.getByRole('textbox', { name: /search|mobile/i })
         });
         this.submitLogin = page.getByRole('button', { name: 'Login' });
     }
@@ -47,6 +51,8 @@ export class LoginPage extends BasePage {
         // If there's a search box, it might be 5, but let's stick to the user's confirmed "toHaveCount(4)" for now
         // but with a bit more robustness.
         try {
+            // Wait for mobile input to be hidden to ensure we are on OTP screen
+            await this.mobileInput.waitFor({ state: 'hidden', timeout: 10000 });
             await expect(this.otpInputs).toHaveCount(4, { timeout: 15000 });
         } catch (error) {
             const count = await this.otpInputs.count();

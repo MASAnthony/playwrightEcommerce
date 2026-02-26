@@ -21,7 +21,8 @@ export class LocationPage extends BasePage {
         this.selectButton = page.getByRole('button', { name: 'Select' });
 
         // New Address Form Locators
-        this.searchInput = page.getByRole('textbox', { name: 'Search for area, street name' });
+        // this.searchInput = page.getByRole('textbox', { name: 'Search for area, street name' });
+        this.searchInput = page.getByRole('textbox', { name: 'Search for area, street name' }).first();
         this.houseNoInput = page.getByRole('textbox', { name: 'House/Flat/Floor No.*' });
         this.areaInput = page.getByRole('textbox', { name: 'Apartment/Road/Area*' });
         this.pincodeInput = page.getByRole('textbox', { name: 'Pincode*' });
