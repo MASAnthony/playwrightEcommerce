@@ -28,7 +28,7 @@ export class LoginPage extends BasePage {
 
     async navigate() {
         await super.navigate(routes.login);
-        await expect(this.page).toHaveURL(/sterlingaccuris/);
+        await expect(this.page).toHaveURL(/.*login/);
     }
 
     async enterMobile(number: string) {

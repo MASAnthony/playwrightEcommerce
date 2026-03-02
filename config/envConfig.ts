@@ -1,5 +1,5 @@
 export const envConfig = {
-    baseUrl: process.env.BASE_URL || 'https://staging-qc.sterlingaccuris.com',
+    baseUrl: process.env.BASE_URL || '',
     adminUsername: process.env.ADMIN_USERNAME || 'admin',
     adminPassword: process.env.ADMIN_PASSWORD || 'password123',
     timeout: {

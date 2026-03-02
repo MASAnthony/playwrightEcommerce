@@ -64,7 +64,7 @@ export class OrderTrackPage extends BasePage {
     private setupAuthCapture(): void {
         this.page.on('request', (request) => {
             if (this.capturedAuthToken) return; // already captured
-            if (!request.url().includes('sterlingaccuris.com/api/')) return;
+            if (!request.url().includes('/api/')) return;
             const auth = request.headers()['authorization'];
             if (auth && auth.startsWith('Bearer ')) {
                 this.capturedAuthToken = auth;
@@ -76,7 +76,7 @@ export class OrderTrackPage extends BasePage {
     async navigateToHome(testInfo?: TestInfo) {
         this.setupAuthCapture(); // wire up before first navigation
         await super.navigate(routes.home, testInfo);
-        await expect(this.page).toHaveURL(/sterlingaccuris/);
+        await expect(this.page).toHaveURL(/.*home/);
     }
 
     async initiateLogin(mobile: string) {
@@ -221,7 +221,7 @@ export class OrderTrackPage extends BasePage {
 
         const orderId = await this.extractCurrentOrderId();
         const apiUrl =
-            `https://staging-api.sterlingaccuris.com/api/v1/booking/internal/visit/enriched/${orderId}`;
+            `/${orderId}`;
 
         logger.info(`Polling: GET ${apiUrl}`);
 

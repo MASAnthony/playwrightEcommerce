@@ -13,7 +13,7 @@ dotenv.config();
 const ortoniConfig: OrtoniReportConfig = {
     folderPath: 'ortoni-report',
     filename: 'ortoni-report.html',
-    title: 'Sterling Accuris - Automation Report',
+    title: 'Automation Report',
     projectName: 'Playwright Automation Framework',
     testType: 'E2E / Broken Link',
     authorName: os.userInfo().username,
@@ -23,7 +23,7 @@ const ortoniConfig: OrtoniReportConfig = {
         'Test Cycle': new Date().toLocaleString('en-IN', { month: 'short', year: 'numeric' }),
         'Environment': 'Staging QC',
         'Platform': os.type(),
-        'Base URL': process.env.BASE_URL || 'https://staging-qc.sterlingaccuris.com'
+        'Base URL': process.env.BASE_URL || ''
     }
 };
 
@@ -61,7 +61,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
-        baseURL: process.env.BASE_URL || 'https://staging-qc.sterlingaccuris.com',
+        baseURL: process.env.BASE_URL || '',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',

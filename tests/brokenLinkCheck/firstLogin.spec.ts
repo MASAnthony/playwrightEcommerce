@@ -10,7 +10,7 @@ test.describe('Home Sample Collection - First Login Flow', () => {
 
         await test.step('Navigate to application and check links', async () => {
             await firstLoginCheckPage.navigateToHome(testInfo);
-            await expect(page).toHaveURL(/sterlingaccuris/);
+            await expect(page).toHaveURL(/.*home/);
             await firstLoginCheckPage.checkBrokenLinks(testInfo);
             await firstLoginCheckPage.checkBrokenImages(testInfo);
         });

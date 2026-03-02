@@ -43,7 +43,7 @@ export class FirstLoginCheck extends BasePage {
 
     async navigateToHome(testInfo?: TestInfo) {
         await super.navigate(routes.home, testInfo);
-        await expect(this.page).toHaveURL(/sterlingaccuris/);
+        await expect(this.page).toHaveURL(/.*home/);
     }
 
     async initiateLogin(mobile: string) {
